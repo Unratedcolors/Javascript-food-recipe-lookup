@@ -23,3 +23,10 @@ As a person responsible for a hosuehold
 I want to lookup ingredients of recipes 
 so I can estimate costs of my next purchases
 ... 
+
+
+## Reference - used resorces
+
+- We consider thr API response of [https://www/themealdb.com/api/json/v1/1/search.php?s=Pie]
+(https://www/themealdb.com/api/json/v1/1/search.php?s=Pie) to be safe in a sense that we rely 
+on displaying its content using innerHTML. Reasonable XSS (cross-site-scripting) protection was still added to the code.  
