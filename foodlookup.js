@@ -7,16 +7,17 @@ const foodContainer = document.querySelector('.js-meal-list-container');
 
 console.log('JavaScript is running');
 
-    function getSourceMarkup(meal) {
-        if (source === null || source === '') {
-            return '';
-        }else { //strictly speaking, you dont need an else here.  
-            return`
-                <p>
-                    <a href="${meal.strSource}" target="_blank">Source</a>        
-                </p>
-            `;
-        }
+function getSourceMarkup(meal) {
+    let source = meal.strSource;
+    if (source === null || source === '') {
+        return '';
+    } else { //strictly speaking, you dont need an else here.  
+        return`
+            <p>
+                <a href="${meal.strSource}" target="_blank">Source</a>        
+            </p>
+        `;
+    }
 }
 
 function getTagsMarkup(meal) {
@@ -51,11 +52,16 @@ function renderRecipe(result) {
     foodContainer.innerHTML = html;    
 }
 
+function renderError(error) {
+    foodContainer.innerHTML = 'No results were found.'; 
+}
+
 function getRecipe(recipe) {
-    const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=${recipe}'
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${recipe}`;
     fetch(url)
     .then(data => data.json())
-    .then(renderRecipe);
+    .then(renderRecipe)
+    .catch(renderError);
 }
 
 function callback(event) {
@@ -63,7 +69,7 @@ function callback(event) {
     // event.stopPropagation(); // in case of other events, read event bubbling
     const searchExpresison = encodeURIComponent(inputField.value).replaceAll('%20', ' ');
     foodContainer.innerHTML =  `Form got submitted with content ${searchExpresison}`;
-        getRecipe(searchExpresison);
+    getRecipe(searchExpresison);
     inputField.value = '';
 }
 
